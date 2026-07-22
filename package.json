@@ -1,0 +1,21 @@
+{
+  "name": "fullstackopen",
+  "version": "1.0.0",
+  "description": "Este curso sirve como una introducción al desarrollo de aplicaciones web modernas con JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ERV1304/fullstackopen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ERV1304/fullstackopen/issues"
+  },
+  "homepage": "https://github.com/ERV1304/fullstackopen#readme"
+}
