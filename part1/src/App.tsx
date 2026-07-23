@@ -10,7 +10,8 @@ function Hello(props: {name?: string, age?: number }) {
   
   return (
     <>
-      <p>Hello {props.name || 'world'}, it is {now.toString()},</p>
+      <p>Hello {props.name || 'world'},</p>
+      <p>{now.toLocaleTimeString()},</p>
       <p>you are {props.age} years old</p>
     </>
   )
@@ -21,7 +22,7 @@ function App() {
   console.log('Hello from Main APP')
 
   const a = 10
-  const b = 20
+  const b = 30
 
   console.log(a+b)
 
@@ -135,7 +136,7 @@ function App() {
 
       <section id="right-side">
         <Hello name="ERV" age={a+b} />
-        <p>{friends}</p>
+        <div>{friends}</div>
       </section>
 
       <div className="ticks"></div>

@@ -83,17 +83,6 @@
     }
   }
 
-#right-side {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: center;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-  }
-}  
-
   .icon {
     margin-bottom: 16px;
     width: 22px;
@@ -191,5 +180,16 @@
   &::after {
     right: 0;
     border-right-color: var(--border);
+  }
+}
+
+#right-side {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
   }
 }
