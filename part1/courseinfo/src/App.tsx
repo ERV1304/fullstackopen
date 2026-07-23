@@ -7,13 +7,22 @@ function Header(props: {course?: string}) {
   )
 }
 
+function Part(props: {part?: {name: string, exercises: number}}) {
+  
+  return (
+    <>
+     <p>{props.part?.name}: {props.part?.exercises}</p>
+    </>
+  )
+}
+
 function Content(props: {part1?: {name: string, exercises: number}, part2?: {name: string, exercises: number}, part3?: {name: string, exercises: number}}) {
   
   return (
     <>
-     <p>{props.part1?.name}: {props.part1?.exercises}</p>
-     <p>{props.part2?.name}: {props.part2?.exercises}</p>
-     <p>{props.part3?.name}: {props.part3?.exercises}</p>
+     <Part part={props.part1} />
+     <Part part={props.part2} />
+     <Part part={props.part3} />
     </>
   )
 }
