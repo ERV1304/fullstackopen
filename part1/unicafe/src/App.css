@@ -1,0 +1,21 @@
+h1 {
+  font-size: 2rem;
+  color: #333;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.button {
+  width: 10%;
+  display: inline;
+}
+
+#left {
+  display: flex;
+  flex-direction: column;
+  place-content: left;
+  place-items: left;
+  flex-grow: 0.05
+  ;
+}
+
