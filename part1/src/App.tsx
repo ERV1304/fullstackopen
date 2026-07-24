@@ -4,15 +4,21 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
-function Hello(props: {name?: string, age?: number }) {
+function Hello(props: {name?: string, age?: number}) {
+  const { name, age } = props
   const now = new Date()
+  const bornYear = () => {
+    const yearNow = new Date().getFullYear()
+    return yearNow - (age || 0)
+  }
   console.log(props)
   
   return (
     <>
-      <p>Hello {props.name || 'world'},</p>
+      <p>Hello {name || 'world'},</p>
       <p>{now.toLocaleTimeString()},</p>
-      <p>you are {props.age} years old</p>
+      <p>you are {age} years old.</p>
+      <p>So you were probably born in {bornYear()}</p>
     </>
   )
 }
@@ -58,16 +64,56 @@ function Javascript() {
   return (<></>)
 }
 
+function Display({count}: {count: number}) { // utilizamos la deconstruccion en lugar de props.count para acceder directamente a count - (props: {count: number})
+  return (
+    <>
+      <p>Count is {count}</p>
+    </>
+  )
+}
+
+function Button(props: {onClick: () => void, text: string}) {
+
+  return (
+    <>
+      <button onClick={props.onClick}>
+        {props.text}
+      </button>
+    </>
+  )
+}
+
 function App() {
   const [count, setCount] = useState(0)
   console.log('Hello from Main APP')
 
-  const a = 10
+  const a = 14
   const b = 30
 
   console.log(a+b)
 
-    const friends = [ 'Peter', 'Maya']
+  const decreaseByOne = () => setCount(count - 1)
+
+  const friends = [ 'Peter', 'Maya']
+
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState<string[]>([])
+  const [total, setTotal] = useState(0)
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    const updatedLeft = left + 1
+    setLeft(updatedLeft)
+    setTotal(updatedLeft + right)
+  }
+
+  const handleRightClick = () => {
+    const updatedRight = right + 1
+    setAll(allClicks.concat('R'))
+    setRight(updatedRight)
+    setTotal(left + updatedRight)
+  }
 
   return (
     <>
@@ -83,13 +129,19 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+
         <button
           type="button"
           className="counter"
           onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        > {/* El controlador de eventos es una función anónima que ejecuta setCount para incrementar el valor de count en 1 cuando pulsamos el botón */}
+        
+        <Display count={count}/> {/* Se pasa el valor de count como prop al componente Display para que se muestre en pantalla */}
         </button>
+
+        <Button onClick={decreaseByOne} text="Minus" /> {/* Se pasa la función ya definida como prop al componente Button para que decremente count en 1 cuando pulsamos el botón */}
+
+        <Button onClick={() => setCount(0)} text="Reset" /> {/* Se pasa una función anónima como prop al componente Button para que reinicie count a 0 cuando pulsamos el botón */}
       </section>
 
       <div className="ticks"></div>
@@ -178,6 +230,21 @@ function App() {
       <section id="right-side">
         <Hello name="ERV" age={a+b} />
         <div>{friends}</div>
+      </section>
+
+      <section id="clicks_test">
+        <div> 
+          {left}
+          <button onClick={handleLeftClick}>
+            left
+          </button>
+          <button onClick={handleRightClick}>
+            right
+          </button>
+          {right}
+          <p>{allClicks.join(' ')}</p>
+          <p>total {total}</p>
+        </div>
       </section>
 
       <section id="javascript">
