@@ -13,10 +13,13 @@ function Header(props: {name?: string}) {
 function Statistics({level, count}: {level: string, count: number}) {
   return (
     <>
-      <p>
-        {level} {count}
-        {level === 'Percentage' && ' %'}
-      </p>
+      <tr>
+        <th>{level}</th>
+        <td>
+          {Number.isInteger(count) ? count : count.toFixed(1)}
+          {level === 'Percentage' && ' %'}
+        </td>
+      </tr>
     </>
   )
 }
@@ -65,12 +68,16 @@ function App() {
         <p>No feedback given</p>
       ) : (
         <>
-          <Statistics level="Good" count={good} />
-          <Statistics level="Neutral" count={neutral} />
-          <Statistics level="Bad" count={bad} />
-          <Statistics level="All" count={all} />
-          <Statistics level="Average" count={average()} />
-          <Statistics level="Percentage" count={percentage()} />
+          <table>
+            <tbody>
+              <Statistics level="Good" count={good} />
+              <Statistics level="Neutral" count={neutral} />
+              <Statistics level="Bad" count={bad} />
+              <Statistics level="All" count={all} />
+              <Statistics level="Average" count={average()} />
+              <Statistics level="Percentage" count={percentage()} />
+            </tbody>
+          </table>
         </>
       )}
       </section>
