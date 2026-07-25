@@ -10,7 +10,7 @@ function Header(props: {name?: string}) {
   )
 }
 
-function Display({level, count}: {level: string, count: number}) {
+function Statistics({level, count}: {level: string, count: number}) {
   return (
     <>
       <p>
@@ -53,23 +53,41 @@ function App() {
 
   const percentage = () => all > 0 ? (good / all) * 100 : 0
 
-  return (
-    <section id="central">
-      <Header name={'give feedback'} />
-      <Button onClick={() => handleClick({level: 'good'})} text="good" />
-      <Button onClick={() => handleClick({level: 'neutral'})} text="neutral" />
-      <Button onClick={() => handleClick({level: 'bad'})} text="bad" />
-      <Header name={'statistics'} />
-      <section id="left">
-        <Display level="Good" count={good} />
-        <Display level="Neutral" count={neutral} />
-        <Display level="Bad" count={bad} />
-        <Display level="All" count={all} />
-        <Display level="Average" count={average()} />
-        <Display level="Percentage" count={percentage()} />
+  if (all === 0) {
+    return (
+      <section id="central">
+        <Header name={'give feedback'} />
+        <Button onClick={() => handleClick({level: 'good'})} text="good" />
+        <Button onClick={() => handleClick({level: 'neutral'})} text="neutral" />
+        <Button onClick={() => handleClick({level: 'bad'})} text="bad" />
+        <Header name={'statistics'} />
+        <section id="left">
+          <p>No feedback given</p>
+        </section>
       </section>
-    </section>
-  )
+    )
+  }
+  else {
+    return (
+        <section id="central">
+          <Header name={'give feedback'} />
+          <Button onClick={() => handleClick({level: 'good'})} text="good" />
+          <Button onClick={() => handleClick({level: 'neutral'})} text="neutral" />
+          <Button onClick={() => handleClick({level: 'bad'})} text="bad" />
+          <Header name={'statistics'} />
+          <section id="left">
+            <Statistics level="Good" count={good} />
+            <Statistics level="Neutral" count={neutral} />
+            <Statistics level="Bad" count={bad} />
+            <Statistics level="All" count={all} />
+            <Statistics level="Average" count={average()} />
+            <Statistics level="Percentage" count={percentage()} />
+          </section>
+        </section>
+      )
+  }
+
+  
 }
 
 export default App
