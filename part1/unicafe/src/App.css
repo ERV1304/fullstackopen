@@ -10,6 +10,14 @@ h1 {
   display: inline;
 }
 
+#central {
+  text-align: left;
+}
+
+#central button {
+  margin: 0.5rem;
+}
+
 #left {
   display: flex;
   flex-direction: column;
