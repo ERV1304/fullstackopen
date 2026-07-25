@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 
+const RandomInit = (length: number) => Math.floor(Math.random() * length)
+
 function App() {
    const anecdotes = [
     'If it hurts, do it more often.',
@@ -9,13 +11,15 @@ function App() {
     'Premature optimization is the root of all evil.',
     'The only way to go fast, is to go well.'
   ]
-  const [selected, setSelected] = useState(0)
+  const [, setSelected] = useState(0)
+
+  const initRandom = RandomInit(anecdotes.length)
 
   return (
     <>
       <div>
-        <p>{anecdotes[selected]}</p>
-        <button onClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))}>
+        <p>{anecdotes[initRandom]}</p>
+        <button onClick={() => setSelected(RandomInit(anecdotes.length))}>
           Next Anecdote
         </button>
       </div>
