@@ -41,13 +41,18 @@ function App() {
   ]
   const [selected, setSelected] = useState(RandomInit(anecdotes.length))
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
-  const [mostVoted, setMostVoted] = useState(0)
+  const [, setMostVoted] = useState(0)
 
   const handleVotes = () => {
     const copy = [...votes]
     copy[selected] += 1
     setVotes(copy)
     setMostVoted(votes.indexOf(Math.max(...copy)))
+  }
+
+  const mostVotedAnecdote = () => {
+    const maxVotes = Math.max(...votes)
+    return votes.indexOf(maxVotes)
   }
 
   console.log('Votes:', votes)
@@ -61,8 +66,8 @@ function App() {
         <Button onClick={handleVotes} text="Vote" />
         <Button onClick={() => setSelected(RandomInit(anecdotes.length))} text="Next Anecdote" />
         <Header name={'with most votes'} />
-        <Display text={anecdotes[mostVoted]} />
-        <Display text={`has ${votes[mostVoted]} votes`} />
+        <Display text={anecdotes[mostVotedAnecdote()]} />
+        <Display text={`has ${votes[mostVotedAnecdote()]} votes`} />
       </section>
     </>
   )
