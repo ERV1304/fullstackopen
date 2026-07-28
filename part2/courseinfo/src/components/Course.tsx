@@ -1,13 +1,14 @@
 function Header(props: {course: {name?: string}}) {
   console.log(props)
+  
   return (
     <>
-     <h1>{props.course.name}</h1>
+     <h2>{props.course?.name || ''}</h2>
     </>
   )
 }
 
-function Part(props: {part?: {name: string, exercises: number}}) {
+function Part(props: {part: {name: string, exercises: number}}) {
   
   return (
     <>
@@ -16,27 +17,43 @@ function Part(props: {part?: {name: string, exercises: number}}) {
   )
 }
 
-function Content(props: {parts?: {name: string, exercises: number}[]}) {
-  
+function Content(props: {parts?: {name: string, exercises: number, id: number}[]}) {
+  console.log(props.parts)
+
   return (
     <>
-     <Part part={props.parts?.[0]} />
-     <Part part={props.parts?.[1]} />
-     <Part part={props.parts?.[2]} />
+    {props.parts?.map(part => 
+        <Part key={part.id} part={part} />
+    )}
+
     </>
   )
 }
 
-const Course = (props) => {
+function Total(props: {parts?: {exercises: number}[]}) {
+  const total = props.parts?.reduce( (sum, part) => 
+        sum + part.exercises, 0)
+
+  return (
+    <>
+     <p>
+        <strong>Number of exercises {total}</strong>
+     </p>
+    </>
+  )
+}
+
+const Course = (props: {course: {name: string, parts: {name: string, exercises: number, id: number}[]}}) => {
     const { course } = props
 
     console.log(course)
-  return (
-    <div>
-        <Header course={course} />
-        <Content parts={course.parts} />
-    </div>
-  )
+    return (
+        <div>
+            <Header course={course} />
+            <Content parts={course.parts} />
+            <Total parts={course.parts} />
+        </div>
+    )
   }
 
 export default Course
