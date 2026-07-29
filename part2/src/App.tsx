@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import Note from './components/Note'
 import './App.css'
 
-function App(props: { notes: { id: number, content: string }[]; animals: { name: string; species: string }[] }) {
+function App(props: { notes: { id: number, important: boolean, content: string }[]; animals: { name: string; species: string }[] }) {
 
   console.log(props.animals)
   const animals  = props.animals
@@ -12,8 +13,28 @@ function App(props: { notes: { id: number, content: string }[]; animals: { name:
   const { name, species } = props.animals[0]
   console.log('First animal is:', name, ' the ', species)
 
-  const notes = props.notes
+  const [notes, setNotes] = useState(props.notes)
+  const [newNote, setNewNote] = useState('')
+  const [showAll, setShowAll] = useState(false)
   console.log(notes)
+
+  const addNote = (event) => {
+    event.preventDefault()
+    const noteObject = {
+      content: newNote,
+      important: Math.random() < 0.5,
+      id: notes.length + 1,
+    }
+    setNotes(notes.concat(noteObject))
+    setNewNote('')
+  }
+
+  const handleNoteChange = (event) => {
+    console.log(event.target.value)
+    setNewNote(event.target.value)
+  }
+
+  const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
 
   return (
     <>
@@ -35,6 +56,23 @@ function App(props: { notes: { id: number, content: string }[]; animals: { name:
             <Note key={note.id} note={note} />
           )}
       </ul>
+       <form onSubmit={addNote}>
+        <input 
+          value={newNote} 
+          onChange={handleNoteChange} />
+        <button type="submit">save</button>
+      </form>   
+    </div>
+    <div>
+      <h1>Only important notes</h1>
+      <ul>
+          {notesToShow.map(note => 
+            <Note key={note.id} note={note} />
+          )}
+      </ul> 
+      <button onClick={() => setShowAll(!showAll)}>
+        show {showAll ? 'important' : 'all' }
+      </button>
     </div>
         </section>
 
