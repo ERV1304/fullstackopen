@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Note from './components/Note'
+import axios from 'axios'
 import './App.css'
 
-function App(props: { notes: { id: number, important: boolean, content: string }[]; animals: { name: string; species: string }[] }) {
+function App(props: { /*notes: { id: number, important: boolean, content: string }[];*/ animals: { name: string; species: string }[] }) {
 
   console.log(props.animals)
   const animals  = props.animals
@@ -13,10 +14,21 @@ function App(props: { notes: { id: number, important: boolean, content: string }
   const { name, species } = props.animals[0]
   console.log('First animal is:', name, ' the ', species)
 
-  const [notes, setNotes] = useState(props.notes)
+  const [notes, setNotes] = useState(/*props.notes*/[])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
-  console.log(notes)
+  
+  /*console.log(notes)*/
+  useEffect(() => {
+  console.log('effect')
+  axios
+    .get('http://localhost:3001/notes')
+    .then(response => {
+      console.log('promise fulfilled')
+      setNotes(response.data)
+    })
+  }, [])
+  console.log('render', notes.length, 'notes')
 
   const addNote = (event) => {
     event.preventDefault()
