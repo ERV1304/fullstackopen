@@ -33,12 +33,23 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
+      id: `${notes.length+1}`,
       content: newNote,
       important: Math.random() < 0.5,
-      id: notes.length + 1,
+      //id: notes.length + 1,
     }
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+    //setNotes(notes.concat(noteObject))
+    //setNewNote('')
+
+  axios
+    .post('http://localhost:3001/notes', noteObject)
+    .then(response => {
+      console.log(response)
+      setNotes(notes.concat(noteObject))
+      setNewNote('')
+    })
+
+
   }
 
   const handleNoteChange = (event) => {
