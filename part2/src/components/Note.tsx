@@ -1,11 +1,17 @@
+const Note = (props) => {
+  const note = props.note
+  const toggleImportance = props.toggleImportance
 
+  const label = note.important
+    ? 'make not important' : 'make important'
 
-const Note = ({ note }: { note: { content: string } }) => {
-//const Note = ({ note }) => {
   return (
-    <li>
-      {note.content}
-    </li>
+    <ul>
+      <li>
+        {note.content} 
+        <button onClick={toggleImportance}>{label}</button>
+      </li>
+    </ul>
   )
 }
 
