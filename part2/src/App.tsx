@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Note from './components/Note'
-import axios from 'axios'
+import noteService from './services/notes'
 import './App.css'
 
 function App(props: { /*notes: { id: number, important: boolean, content: string }[];*/ animals: { name: string; species: string }[] }) {
@@ -20,13 +20,11 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
   
   /*console.log(notes)*/
   useEffect(() => {
-  console.log('effect')
-  axios
-    .get('http://localhost:3001/notes')
-    .then(response => {
-      console.log('promise fulfilled')
-      setNotes(response.data)
-    })
+   noteService
+      .getAll()
+      .then(initialNotes => {
+        setNotes(initialNotes)
+      })
   }, [])
   console.log('render', notes.length, 'notes')
 
@@ -36,18 +34,14 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
       id: `${notes.length+1}`,
       content: newNote,
       important: Math.random() < 0.5,
-      //id: notes.length + 1,
     }
-    //setNotes(notes.concat(noteObject))
-    //setNewNote('')
 
-  axios
-    .post('http://localhost:3001/notes', noteObject)
-    .then(response => {
-      console.log(response)
-      setNotes(notes.concat(response.data))
-      setNewNote('')
-    })
+   noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
+        setNewNote('')
+      })
   }
 
   const handleNoteChange = (event) => {
@@ -62,9 +56,11 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
 
-    axios.put(url, changedNote).then(response => {
-      setNotes(notes.map(note => note.id !== id ? note : response.data))
-    })
+    noteService
+      .update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
 }
 
 
