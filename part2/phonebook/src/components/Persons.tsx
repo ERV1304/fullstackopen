@@ -8,14 +8,14 @@ const searchPattern = props.searchPattern
 
 const deletePerson = (id) => {
   const person = persons.find(p => p.id === id)
-  if (window.confirm(`Delete ${person.name}?`)) {
+  if (window.confirm(`Borrar ${person.name}?`)) {
     personsService
       .deletePerson(id)
       .then(() => {
         setPersons(persons.filter(p => p.id !== id))
       })
       .catch(error => {
-        alert(`the person '${person.name}' was already deleted from server`)
+        alert(`'${person.name}' ya fue borrada del servidor`)
         setPersons(persons.filter(p => p.id !== id))
       })
   }

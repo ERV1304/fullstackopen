@@ -28,6 +28,23 @@ const PersonForm = (props) => {
             })
         
     }
+    else {
+      const person = persons.find(p => p.name === newName)
+      if (window.confirm(`${newName} ya existe en la agenda telefónica, ¿desea reemplazar el número?`)) {
+        const changedPerson = { ...person, number: newNumber }
+        personsService
+          .update(person.id, changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+            setNewName('')
+            setNewNumber('')
+          })
+          .catch(error => {
+            alert(`El número de '${person.name}' no ha podido ser actualizado en el servidor`)
+            setPersons(persons)
+          })
+      }
+    }
   }
 
   const handlePersonNameChange = (event) => {
@@ -40,7 +57,7 @@ const PersonForm = (props) => {
     if ( persons.filter(person => person.name === newAddName).length > 0 )
     {
         alert(`Ya existe ${newAddName} en la agenda telefónica`)
-        document.getElementsByTagName('button')[0].disabled = true
+        //document.getElementsByTagName('button')[0].disabled = true
     }
   }
 
