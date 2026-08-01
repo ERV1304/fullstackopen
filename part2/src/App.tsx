@@ -45,7 +45,7 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
     .post('http://localhost:3001/notes', noteObject)
     .then(response => {
       console.log(response)
-      setNotes(notes.concat(noteObject))
+      setNotes(notes.concat(response.data))
       setNewNote('')
     })
   }
