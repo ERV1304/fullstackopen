@@ -3,7 +3,9 @@ const baseUrl = 'http://localhost:3001/notes'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+  return request.then(response => response.data).catch(error => {
+    console.log('fail-getAll')
+  })
 }
 
 const create = newObject => {
@@ -13,11 +15,10 @@ const create = newObject => {
 
 const update = (id, newObject) => {
   const request = axios.put(`${baseUrl}/${id}`, newObject)
-  return request.then(response => response.data)
+  return request.then(response => response.data).catch(error => {
+    console.log('fail-update')
+  })
+  
 }
 
-export default { 
-  getAll: getAll, 
-  create: create, 
-  update: update 
-}
+export default { getAll, create, update }
