@@ -1,3 +1,5 @@
+import personsService from '../services/persons'
+
 const PersonForm = (props) => {
   const persons = props.persons
   const setPersons = props.setPersons
@@ -16,10 +18,16 @@ const PersonForm = (props) => {
     
     if ( persons.filter(person => person.name === personObject.name).length === 0 )
     {
-      setPersons(persons.concat(personObject))
+      
+         personsService
+            .create(personObject)
+            .then(returnedPerson => {
+              setPersons(persons.concat(returnedPerson))
+              setNewName('')
+              setNewNumber('')
+            })
+        
     }
-    setNewName('')
-    setNewNumber('')
   }
 
   const handlePersonNameChange = (event) => {

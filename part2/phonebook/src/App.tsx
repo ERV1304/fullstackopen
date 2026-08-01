@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
-import axios from 'axios'
+import personsService from './services/persons'
 import './App.css'
 
 const App = () => {
@@ -12,13 +12,13 @@ const App = () => {
   const [searchPattern, setSearchPattern] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personsService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
-    }, [])
+  }, [])
+  console.log('render', persons.length, 'persons')
 
   return (
     <>
