@@ -32,7 +32,7 @@ const App = () => {
       <div className='div'>
         <h3>Numbers</h3>
         <ul>
-          <Persons persons={persons} searchPattern={searchPattern} />
+          <Persons persons={persons} setPersons={setPersons} searchPattern={searchPattern} />
         </ul>
       </div>
     </>
