@@ -44,13 +44,6 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
       })
   }
 
-  const handleNoteChange = (event) => {
-    console.log(event.target.value)
-    setNewNote(event.target.value)
-  }
-
-  const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
-
   const toggleImportanceOf = id => {
     const url = `http://localhost:3001/notes/${id}`
     const note = notes.find(n => n.id === id)
@@ -61,8 +54,18 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
       .then(returnedNote => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
-}
+      .catch((error) => {
+        alert(`the note '${note.content}' was already deleted from server`)
+        setNotes(notes.filter((n) => n.id !== id))
+      })
+  }
 
+  const handleNoteChange = (event) => {
+    console.log(event.target.value)
+    setNewNote(event.target.value)
+  }
+
+  const notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
   return (
     <>
