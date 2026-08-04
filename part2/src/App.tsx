@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import Note from './components/Note'
+import Notification from './components/Notification'
 import noteService from './services/notes'
 import './App.css'
 
-function App(props: { /*notes: { id: number, important: boolean, content: string }[];*/ animals: { name: string; species: string }[] }) {
+function App(props: { animals: { name: string; species: string }[] /*notes: { id: number, important: boolean, content: string }[];*/  }) {
 
   console.log(props.animals)
   const animals  = props.animals
@@ -17,8 +18,10 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
   const [notes, setNotes] = useState(/*props.notes*/[])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
-  
-  /*console.log(notes)*/
+  const [message, setMessage] = useState('')
+  const [showMessage, setShowMessage] = useState(false)
+  const [typeMessage, setTypeMessage] = useState('')
+
   useEffect(() => {
    noteService
       .getAll()
@@ -41,6 +44,14 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
       .then(returnedNote => {
         setNotes(notes.concat(returnedNote))
         setNewNote('')
+        setMessage(
+          `Note '${returnedNote.id}' was added to server`
+        )
+        setShowMessage(true)
+        setTypeMessage('success')
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
   }
 
@@ -55,7 +66,16 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server`)
+        //alert(`the note '${note.content}' was already deleted from server`)
+        setMessage(
+          `Note '${note.content}' was already removed from server`
+        )
+        setShowMessage(true)
+        setTypeMessage('error')
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+
         setNotes(notes.filter((n) => n.id !== id))
       })
   }
@@ -82,9 +102,10 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
 
     <div>
       <h1>Notes</h1>
+      <Notification message={message} show={showMessage} type={typeMessage} />
       <ul>
           {notes.map(note => 
-            <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
+            <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} makebutton={() => true} />
           )}
       </ul>
        <form onSubmit={addNote}>
@@ -98,7 +119,7 @@ function App(props: { /*notes: { id: number, important: boolean, content: string
       <h1>Only important notes</h1>
       <ul>
           {notesToShow.map(note => 
-            <Note key={note.id} note={note} />
+            <Note key={note.id} note={note} makebutton={() => false} />
           )}
       </ul> 
       <button onClick={() => setShowAll(!showAll)}>

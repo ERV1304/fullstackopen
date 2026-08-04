@@ -16,15 +16,9 @@
       "important": true
     },
     {
-      "id": "dYdjprDcoUY",
-      "content": "note four",
-      "important": false
-    },
-    {
-      "id": "yovtZeyxOH8",
-      "content": "note five",
+      "id": "4",
+      "content": "React is a JavaScript library for building user interfaces",
       "important": true
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

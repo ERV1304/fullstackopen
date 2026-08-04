@@ -13,26 +13,6 @@ const animals = [
     {name: 'rocky', species: 'dog'},
   ]
 
-/*  
-const notes = [
-  {
-    id: 1,
-    content: 'HTML is easy',
-    important: true
-  },
-  {
-    id: 2,
-    content: 'Browser can execute only JavaScript',
-    important: false
-  },
-  {
-    id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    important: true
-  }
-]
-  */
-
 const promise = axios.get('http://localhost:3001/notes')
 console.log(promise)
 
@@ -48,6 +28,6 @@ axios
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App animals={animals} /*notes={notes}*/ />
+    <App animals={animals} />
   </StrictMode>,
 )
