@@ -21,6 +21,7 @@
     "browserslist": "^4.28.7",
     "caniuse-lite": "^1.0.30001806",
     "convert-source-map": "^2.0.0",
+    "cors": "^2.8.6",
     "cross-spawn": "^7.0.6",
     "csstype": "^3.2.3",
     "debug": "^4.4.3",
