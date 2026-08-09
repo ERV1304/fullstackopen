@@ -5,6 +5,8 @@ const Persons = (props) => {
 const persons = props.persons
 const setPersons = props.setPersons
 const searchPattern = props.searchPattern
+const setMessage = props.setMessage
+const setClassNameMessage = props.setClassNameMessage
 
 const deletePerson = (id) => {
   const person = persons.find(p => p.id === id)
@@ -12,11 +14,25 @@ const deletePerson = (id) => {
     personsService
       .deletePerson(id)
       .then(() => {
+        const successMessage = `'${person.name}' fue eliminada del servidor`
+
         setPersons(persons.filter(p => p.id !== id))
+        setMessage(successMessage)
+        setClassNameMessage('notification success')
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
-      .catch(error => {
-        alert(`'${person.name}' ya fue borrada del servidor`)
+      .catch(() => {
+        //alert(`'${person.name}' ya fue borrada del servidor`)
+        const errorMessage = `'${person.name}' ya fue borrada del servidor`
+
         setPersons(persons.filter(p => p.id !== id))
+        setMessage(errorMessage)
+        setClassNameMessage('notification error')
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
   }
 }

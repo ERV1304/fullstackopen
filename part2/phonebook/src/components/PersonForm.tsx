@@ -7,7 +7,9 @@ const PersonForm = (props) => {
   const setNewName = props.setNewName
   const newNumber = props.newNumber
   const setNewNumber = props.setNewNumber
-  
+  const setMessage = props.setMessage
+  const setClassNameMessage = props.setClassNameMessage
+
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -21,10 +23,17 @@ const PersonForm = (props) => {
       
          personsService
             .create(personObject)
-            .then(returnedPerson => {
+            .then ((returnedPerson, successMessage) => {
+              successMessage = `'${returnedPerson.name}' fue añadida al servidor`
+
               setPersons(persons.concat(returnedPerson))
               setNewName('')
               setNewNumber('')
+              setMessage(successMessage)
+              setClassNameMessage('notification success')
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000)
             })
         
     }
@@ -34,14 +43,28 @@ const PersonForm = (props) => {
         const changedPerson = { ...person, number: newNumber }
         personsService
           .update(person.id, changedPerson)
-          .then(returnedPerson => {
+          .then((returnedPerson, successMessage) => {
+            successMessage = `El número de '${returnedPerson.name}' se ha actualizado en el servidor`
+
             setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
             setNewName('')
             setNewNumber('')
+            setMessage(successMessage)
+              setClassNameMessage('notification success')
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000)
           })
-          .catch(error => {
-            alert(`El número de '${person.name}' no ha podido ser actualizado en el servidor`)
+          .catch(errorMessage => {
+            //alert(`El número de '${person.name}' no ha podido ser actualizado en el servidor`)
+            errorMessage = `El número de '${person.name}' no ha podido ser actualizado en el servidor`
+
             setPersons(persons)
+            setMessage(errorMessage)
+            setClassNameMessage('notification error')
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
           })
       }
     }
