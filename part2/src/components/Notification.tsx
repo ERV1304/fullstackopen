@@ -1,4 +1,4 @@
-const Notification = ({ message, show, type }) => {
+const Notification = ({ message, show, type }: {message: string, show: boolean, type: string}) => {
   console.log('Notification message:', message)
   if (message === null) {
     return null

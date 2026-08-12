@@ -1,4 +1,4 @@
-const Note = (props) => {
+const Note = (props: {note: {id:string, content: string, important: boolean}, toggleImportance?: ()=>void, makebutton: ()=>boolean}) => {
   const note = props.note
   const toggleImportance = props.toggleImportance
   const makebutton = props.makebutton()
