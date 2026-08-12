@@ -58,6 +58,7 @@ function App(props: { animals: { name: string; species: string }[] /*notes: { id
         setTypeMessage('success')
         setTimeout(() => {
           setMessage('')
+          setShowMessage(false)
         }, 5000)
       })
   }
@@ -80,6 +81,7 @@ function App(props: { animals: { name: string; species: string }[] /*notes: { id
         setTypeMessage('error')
         setTimeout(() => {
           setMessage('')
+          setShowMessage(false)
         }, 5000)
 
         setNotes(notes.filter((n) => n.id !== id))
