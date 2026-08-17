@@ -43,10 +43,10 @@ const PersonForm = (props) => {
         const changedPerson = { ...person, number: newNumber }
         personsService
           .update(person.id, changedPerson)
-          .then((returnedPerson, successMessage) => {
-            successMessage = `El número de '${returnedPerson.name}' se ha actualizado en el servidor`
+          .then((successMessage) => {
+            successMessage = `El número de '${person.name}' se ha actualizado en el servidor`
 
-            setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+            setPersons(persons.map(p => p.id !== person.id ? p : changedPerson))
             setNewName('')
             setNewNumber('')
             setMessage(successMessage)
